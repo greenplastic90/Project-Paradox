@@ -5,22 +5,23 @@ using UnityEngine;
 public class RenderShape : MonoBehaviour
 {
     public LineRenderer lineRenderer;
+    public float lineWidth;
+    public Color lineColor;
+
     // Start is called before the first frame update
     void Start()
     {
-        //  DrawCircle(500, 1);
-        // DrawSquare(3);
-        // DrawRectangle(3, 5);
-        DrawTriangle(3);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        lineRenderer.startWidth = lineWidth;
+        lineRenderer.endWidth = lineWidth;
+        lineRenderer.material.color = lineColor;
+        lineRenderer.loop = true;
 
     }
 
-    void DrawCircle(int steps, float radius)
+
+
+    // steps are the number of lines needed to simulate a circle, the more steps the more smooth the circle looks
+    public void DrawCircle(int steps, float radius)
     {
         lineRenderer.positionCount = steps;
 
@@ -42,9 +43,10 @@ public class RenderShape : MonoBehaviour
         }
     }
 
-    void DrawSquare(float size)
+    public void DrawSquare(float size)
     {
-        lineRenderer.positionCount = 5;
+
+        lineRenderer.positionCount = 4;
 
         float halfSize = size / 2f;
 
@@ -57,12 +59,14 @@ public class RenderShape : MonoBehaviour
         lineRenderer.SetPosition(1, topRight);
         lineRenderer.SetPosition(2, bottomRight);
         lineRenderer.SetPosition(3, bottomLeft);
-        lineRenderer.SetPosition(4, topLeft);
     }
 
-    void DrawRectangle(float width, float height)
+
+
+    public void DrawRectangle(float width, float height)
     {
-        lineRenderer.positionCount = 5;
+
+        lineRenderer.positionCount = 4;
 
         float halfWidth = width / 2f;
         float halfHeight = height / 2f;
@@ -72,16 +76,20 @@ public class RenderShape : MonoBehaviour
         Vector3 bottomRight = new Vector3(halfWidth, -halfHeight, 0f);
         Vector3 bottomLeft = new Vector3(-halfWidth, -halfHeight, 0f);
 
+
         lineRenderer.SetPosition(0, topLeft);
         lineRenderer.SetPosition(1, topRight);
         lineRenderer.SetPosition(2, bottomRight);
         lineRenderer.SetPosition(3, bottomLeft);
-        lineRenderer.SetPosition(4, topLeft);
+
     }
 
-    void DrawTriangle(float size)
+
+
+    public void DrawTriangle(float size)
     {
-        lineRenderer.positionCount = 4;
+
+        lineRenderer.positionCount = 3;
 
         float halfSize = size / 2f;
 
@@ -92,7 +100,8 @@ public class RenderShape : MonoBehaviour
         lineRenderer.SetPosition(0, top);
         lineRenderer.SetPosition(1, bottomLeft);
         lineRenderer.SetPosition(2, bottomRight);
-        lineRenderer.SetPosition(3, top);
+
     }
+
 
 }
