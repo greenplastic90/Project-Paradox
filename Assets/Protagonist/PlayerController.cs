@@ -8,30 +8,33 @@ public class PlayerController : MonoBehaviour
     private RenderShape bodyShape;
     public float speed = 5f;
 
-    private Rigidbody2D rb;
+    private Rigidbody2D rb2D;
     private Vector2 moveInput;
 
     void Start()
     {
         bodyShape = transform.Find("Body").GetComponent<RenderShape>();
-        rb = GetComponent<Rigidbody2D>();
+        rb2D = GetComponent<Rigidbody2D>();
 
         // bodyShape.DrawSquare(1);
         // bodyShape.DrawRectangle(1, 2);
         // bodyShape.DrawTriangle(1);
-        bodyShape.DrawCircle(200, 2);
+        // bodyShape.DrawCircle(100, 1);
     }
 
     void Update()
     {
-        // Get input from keyboard or controller
-        moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+
+        Vector2 movement = new Vector2(moveHorizontal, moveVertical);
+
+        rb2D.AddForce(movement * speed);
+        bodyShape.DrawTriangle(2);
     }
 
     void FixedUpdate()
     {
-        // Move player based on input
-        Vector2 moveVelocity = moveInput.normalized * speed;
-        rb.velocity = moveVelocity;
+
     }
 }
