@@ -277,6 +277,14 @@ MonoBehaviour:
   triangleCollider: {fileID: 76844296}
   lineWidth: 0.05
   lineColor: {r: 1, g: 1, b: 1, a: 0}
+  isCircle: 1
+  circleRadius: 0.5
+  circleSteps: 25
+  isRectangle: 0
+  rectangleLengthX: 1
+  rectangleLengthY: 1
+  isTriangle: 0
+  triangleSideLength: 1
 --- !u!58 &76844294
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -417,6 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  isMoving: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

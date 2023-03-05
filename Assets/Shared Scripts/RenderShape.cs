@@ -5,6 +5,7 @@ using UnityEngine;
 public class RenderShape : MonoBehaviour
 {
     public GameObject parentObject;
+    private bool parentIsMoving;
     public LineRenderer lineRenderer;
     public BoxCollider2D boxCollider;
     public CircleCollider2D circleCollider;
@@ -12,23 +13,100 @@ public class RenderShape : MonoBehaviour
     public float lineWidth;
     public Color lineColor;
 
+    public int circleSteps;
+    public float circleRadius;
+    public float rectangleLengthX;
+    public float rectangleLengthY;
+
+    public float triangleSideLength;
+
+    public Dictionary<string, bool> shapeDict = new Dictionary<string, bool>()
+    {
+        {"isCircle", false},
+        {"isRectangle", false},
+        {"isTriangle", false}
+    };
+
+
+
     // Start is called before the first frame update
     void Start()
     {
+
+
+
+
         lineRenderer.startWidth = lineWidth;
         lineRenderer.endWidth = lineWidth;
         lineColor = new Color(255, 255, 255);
         lineRenderer.material.color = lineColor;
         lineRenderer.loop = true;
+        Debug.Log("Shape Start");
+
 
     }
 
     void Update()
     {
+        CheckIfParentIsMoving();
+        // Only Draw shapes while movement is happening
+        if (parentIsMoving)
+        {
+            DrawSelectedShape();
+        }
+
 
     }
 
+    // Shape picked is true the rest are false,
+    public void ChooseShape(string key)
+    {
+        var shapes = new Dictionary<string, bool>(shapeDict);
+        foreach (var shape in shapes)
+        {
+            if (shape.Key == key)
+            {
+                shapeDict[shape.Key] = true;
 
+            }
+            else
+            {
+                shapeDict[shape.Key] = false;
+            }
+        }
+        DrawSelectedShape();
+    }
+
+
+
+    private void CheckIfParentIsMoving()
+    {
+        parentIsMoving = parentObject.GetComponent<PlayerController>().isMoving;
+    }
+
+    private void DrawSelectedShape()
+    {
+        foreach (KeyValuePair<string, bool> shape in shapeDict)
+        {
+            if (shape.Value)
+            {
+                if (shape.Key == "isCircle")
+                {
+                    DrawCircle(circleSteps, circleRadius);
+                }
+                if (shape.Key == "isRectangle")
+                {
+                    DrawRectangle(rectangleLengthX, rectangleLengthY);
+                }
+                if (shape.Key == "isTriangle")
+                {
+                    DrawTriangle(triangleSideLength);
+                }
+            }
+        }
+
+
+    }
 
     public void DrawCircle(int steps, float radius)
     {
@@ -55,28 +133,6 @@ public class RenderShape : MonoBehaviour
             lineRenderer.SetPosition(currentStep, currentPosition);
         }
     }
-
-    // public void DrawSquare(float size)
-    // {
-    //     lineRenderer.positionCount = 4;
-
-    //     float halfSize = size / 2f;
-
-    //     Vector3 topLeft = new Vector3(-halfSize, halfSize, 0f);
-    //     Vector3 topRight = new Vector3(halfSize, halfSize, 0f);
-    //     Vector3 bottomRight = new Vector3(halfSize, -halfSize, 0f);
-    //     Vector3 bottomLeft = new Vector3(-halfSize, -halfSize, 0f);
-
-    //     topLeft = transform.rotation * topLeft + transform.position;
-    //     topRight = transform.rotation * topRight + transform.position;
-    //     bottomRight = transform.rotation * bottomRight + transform.position;
-    //     bottomLeft = transform.rotation * bottomLeft + transform.position;
-
-    //     lineRenderer.SetPosition(0, topLeft);
-    //     lineRenderer.SetPosition(1, topRight);
-    //     lineRenderer.SetPosition(2, bottomRight);
-    //     lineRenderer.SetPosition(3, bottomLeft);
-    // }
 
     public void DrawRectangle(float width, float height)
     {
@@ -131,50 +187,44 @@ public class RenderShape : MonoBehaviour
 
     private void ColliderShape(float circleRadius = 0f, float boxX = 0f, float boxY = 0f, float triangleSideLength = 0f)
     {
-        // Array of collider
-        Collider2D[] colliders = gameObject.GetComponentsInChildren<Collider2D>();
         // Disable all colliders
+        Collider2D[] colliders = gameObject.GetComponentsInChildren<Collider2D>();
         foreach (Collider2D collider in colliders)
         {
             collider.enabled = false;
         }
-        // Activate the desired collider
-        // BoxCollider2D
-        if (boxX != 0 && boxY != 0)
+
+
+
+        foreach (KeyValuePair<string, bool> shape in shapeDict)
         {
-            boxCollider.enabled = true;
+            if (shape.Value)
+            {
+                if (shape.Key == "isCircle")
+                {
+                    circleCollider.enabled = true;
+                    circleCollider.radius = circleRadius;
+                }
+                if (shape.Key == "isRectangle")
+                {
+                    boxCollider.enabled = true;
+                    boxCollider.size = new Vector2(boxX, boxY);
+                }
+                if (shape.Key == "isTriangle")
+                {
+                    triangleCollider.enabled = true;
 
-            boxCollider.size = new Vector2(boxX, boxY);
+                    float height = Mathf.Sqrt(3) / 2 * triangleSideLength;
+                    Vector2[] points = new Vector2[3];
 
+                    points[0] = new Vector2(-triangleSideLength / 2, -height / 2);
+                    points[1] = new Vector2(triangleSideLength / 2, -height / 2);
+                    points[2] = new Vector2(0, height / 2);
+
+                    triangleCollider.points = points;
+                }
+            }
         }
-        // CircleCollider2D
-        else if (circleRadius != 0)
-        {
-            circleCollider.enabled = true;
-            circleCollider.radius = circleRadius;
-        }
-        // PolygonCollider2D
-        else if (triangleSideLength != 0)
-        {
-            triangleCollider.enabled = true;
-
-            float height = Mathf.Sqrt(3) / 2 * triangleSideLength;  // Calculate the height of the equilateral triangle
-            Vector2[] points = new Vector2[3];  // Create an array of Vector2 points
-
-            // Set the vertices of the triangle
-            points[0] = new Vector2(-triangleSideLength / 2, -height / 2);
-            points[1] = new Vector2(triangleSideLength / 2, -height / 2);
-            points[2] = new Vector2(0, height / 2);
-
-            triangleCollider.points = points;
-        }
-        else
-        {
-            Debug.LogError("Invalid Params");
-        }
-
-
-        //todo give collider the right proportions
 
     }
 

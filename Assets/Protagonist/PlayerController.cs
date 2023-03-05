@@ -6,31 +6,41 @@ public class PlayerController : MonoBehaviour
 
 {
     private RenderShape bodyShape;
-    public float speed = 5f;
-
     private Rigidbody2D rb2D;
-    private Vector2 moveInput;
+    public float speed = 5f;
+    public bool isMoving;
+
+
+
 
     void Start()
     {
         bodyShape = transform.Find("Body").GetComponent<RenderShape>();
         rb2D = GetComponent<Rigidbody2D>();
 
-        // bodyShape.DrawSquare(1);
-        // bodyShape.DrawRectangle(1, 2);
-        // bodyShape.DrawTriangle(1);
-        // bodyShape.DrawCircle(100, 1);
+        // Starting Shape
+        bodyShape.ChooseShape("isTriangle");
     }
 
     void Update()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        Movement();
+    }
 
-        Vector2 movement = new Vector2(moveHorizontal, moveVertical);
-
-        rb2D.AddForce(movement * speed);
-        bodyShape.DrawTriangle(2);
+    private void Movement()
+    {
+        float moveHorizontal = Input.GetAxisRaw("Horizontal");
+        float moveVertical = Input.GetAxisRaw("Vertical");
+        if (moveHorizontal != 0)
+        {
+            isMoving = true;
+            rb2D.velocity = new Vector2(moveHorizontal * speed, rb2D.velocity.y);
+        }
+        else
+        {
+            isMoving = false;
+            rb2D.velocity = Vector2.zero;
+        }
     }
 
 
