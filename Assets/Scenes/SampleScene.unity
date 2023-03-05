@@ -277,13 +277,10 @@ MonoBehaviour:
   triangleCollider: {fileID: 76844296}
   lineWidth: 0.05
   lineColor: {r: 1, g: 1, b: 1, a: 0}
-  isCircle: 1
-  circleRadius: 0.5
   circleSteps: 25
-  isRectangle: 0
+  circleRadius: 0.5
   rectangleLengthX: 1
   rectangleLengthY: 1
-  isTriangle: 0
   triangleSideLength: 1
 --- !u!58 &76844294
 CircleCollider2D:
@@ -292,7 +289,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76844290}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -308,7 +305,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76844290}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -334,7 +331,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76844290}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -424,7 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c036b6f5762aa4233870548b8cce685e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 10
   isMoving: 0
 --- !u!1 &519420028
 GameObject:
@@ -462,7 +459,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

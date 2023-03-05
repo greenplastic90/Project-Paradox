@@ -32,18 +32,11 @@ public class RenderShape : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-
-
-
         lineRenderer.startWidth = lineWidth;
         lineRenderer.endWidth = lineWidth;
         lineColor = new Color(255, 255, 255);
         lineRenderer.material.color = lineColor;
         lineRenderer.loop = true;
-        Debug.Log("Shape Start");
-
-
     }
 
     void Update()

@@ -31,15 +31,34 @@ public class PlayerController : MonoBehaviour
     {
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
         float moveVertical = Input.GetAxisRaw("Vertical");
-        if (moveHorizontal != 0)
+
+        if (moveHorizontal != 0 || moveVertical != 0)
         {
             isMoving = true;
-            rb2D.velocity = new Vector2(moveHorizontal * speed, rb2D.velocity.y);
         }
         else
         {
             isMoving = false;
-            rb2D.velocity = Vector2.zero;
+        }
+
+
+        if (moveHorizontal != 0)
+        {
+            rb2D.velocity = new Vector2(moveHorizontal * speed, rb2D.velocity.y);
+        }
+        else
+        {
+            rb2D.velocity = new Vector2(0, rb2D.velocity.y);
+        }
+
+        if (moveVertical != 0)
+        {
+
+            rb2D.velocity = new Vector2(rb2D.velocity.x, moveVertical * speed);
+        }
+        else
+        {
+            rb2D.velocity = new Vector2(rb2D.velocity.x, 0);
         }
     }
 
