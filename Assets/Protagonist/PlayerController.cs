@@ -30,11 +30,8 @@ public class PlayerController : MonoBehaviour
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
 
         rb2D.AddForce(movement * speed);
-        bodyShape.DrawCircle(15, 2);
+        bodyShape.DrawTriangle(2);
     }
 
-    void FixedUpdate()
-    {
 
-    }
 }
