@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     private RenderShape bodyShape;
     private Rigidbody2D rb2D;
-    public float speed = 5f;
+    public float movementSpeed = 5f;
+    public float rotateSpeed;
 
 
 
@@ -31,18 +32,24 @@ public class PlayerController : MonoBehaviour
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
+        float rotateAmount = Input.GetAxis("Mouse X") * rotateSpeed;
 
         if (moveHorizontal != 0)
         {
-            rb2D.velocity = new Vector2(moveHorizontal * speed, rb2D.velocity.y);
+            rb2D.velocity = new Vector2(moveHorizontal * movementSpeed, rb2D.velocity.y);
         }
 
         if (moveVertical != 0)
         {
-            rb2D.velocity = new Vector2(rb2D.velocity.x, moveVertical * speed);
+            rb2D.velocity = new Vector2(rb2D.velocity.x, moveVertical * movementSpeed);
         }
 
+        if (rotateAmount != 0)
+        {
+            rb2D.rotation -= rotateAmount;
+        }
     }
+
 
 
 }
