@@ -157,15 +157,22 @@ public class RenderShape : MonoBehaviour
         Vector3 bottomLeft = new Vector3(-size / 2f, -height / 2f, 0f);
         Vector3 bottomRight = new Vector3(size / 2f, -height / 2f, 0f);
 
-        // Apply rotation around z-axis
+        // Apply rotation around z-axis and add transform.position
         top = transform.rotation * top + transform.position;
         bottomLeft = transform.rotation * bottomLeft + transform.position;
         bottomRight = transform.rotation * bottomRight + transform.position;
+
+        // Subtract the center of the triangle from each vertex to shift the center to transform.position
+        Vector3 center = (top + bottomLeft + bottomRight) / 3f;
+        top -= center - transform.position;
+        bottomLeft -= center - transform.position;
+        bottomRight -= center - transform.position;
 
         lineRenderer.SetPosition(0, top);
         lineRenderer.SetPosition(1, bottomLeft);
         lineRenderer.SetPosition(2, bottomRight);
     }
+
 
 
     private void ColliderShape(float circleRadius = 0f, float boxX = 0f, float boxY = 0f, float triangleSideLength = 0f)
@@ -203,6 +210,12 @@ public class RenderShape : MonoBehaviour
                     points[0] = new Vector2(-triangleSideLength / 2, -height / 2);
                     points[1] = new Vector2(triangleSideLength / 2, -height / 2);
                     points[2] = new Vector2(0, height / 2);
+
+                    // Subtract the center of the triangle from each vertex to shift the center to transform.position
+                    Vector2 center = (points[0] + points[1] + points[2]) / 3f;
+                    points[0] -= center;
+                    points[1] -= center;
+                    points[2] -= center;
 
                     triangleCollider.points = points;
                 }
