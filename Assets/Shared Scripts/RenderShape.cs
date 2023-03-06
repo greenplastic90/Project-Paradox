@@ -211,11 +211,12 @@ public class RenderShape : MonoBehaviour
                     points[1] = new Vector2(triangleSideLength / 2, -height / 2);
                     points[2] = new Vector2(0, height / 2);
 
-                    // Subtract the center of the triangle from each vertex to shift the center to transform.position
+                    // Subtract the center of the triangle from each vertex to shift the center
                     Vector2 center = (points[0] + points[1] + points[2]) / 3f;
-                    points[0] -= center;
-                    points[1] -= center;
-                    points[2] -= center;
+                    for (int i = 0; i < points.Length; i++)
+                    {
+                        points[i] -= center;
+                    }
 
                     triangleCollider.points = points;
                 }
