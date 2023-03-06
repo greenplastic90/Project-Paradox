@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     private RenderShape bodyShape;
     private Rigidbody2D rb2D;
     public float speed = 5f;
-    public bool isMoving;
+
 
 
 
@@ -29,37 +29,19 @@ public class PlayerController : MonoBehaviour
 
     private void Movement()
     {
-        float moveHorizontal = Input.GetAxisRaw("Horizontal");
-        float moveVertical = Input.GetAxisRaw("Vertical");
-
-        if (moveHorizontal != 0 || moveVertical != 0)
-        {
-            isMoving = true;
-        }
-        else
-        {
-            isMoving = false;
-        }
-
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
 
         if (moveHorizontal != 0)
         {
             rb2D.velocity = new Vector2(moveHorizontal * speed, rb2D.velocity.y);
         }
-        else
-        {
-            rb2D.velocity = new Vector2(0, rb2D.velocity.y);
-        }
 
         if (moveVertical != 0)
         {
-
             rb2D.velocity = new Vector2(rb2D.velocity.x, moveVertical * speed);
         }
-        else
-        {
-            rb2D.velocity = new Vector2(rb2D.velocity.x, 0);
-        }
+
     }
 
 

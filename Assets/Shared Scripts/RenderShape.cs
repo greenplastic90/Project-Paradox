@@ -41,12 +41,9 @@ public class RenderShape : MonoBehaviour
 
     void Update()
     {
-        CheckIfParentIsMoving();
-        // Only Draw shapes while movement is happening
-        if (parentIsMoving)
-        {
-            DrawSelectedShape();
-        }
+
+        DrawSelectedShape();
+
 
 
     }
@@ -68,13 +65,6 @@ public class RenderShape : MonoBehaviour
             }
         }
         DrawSelectedShape();
-    }
-
-
-
-    private void CheckIfParentIsMoving()
-    {
-        parentIsMoving = parentObject.GetComponent<PlayerController>().isMoving;
     }
 
     private void DrawSelectedShape()
