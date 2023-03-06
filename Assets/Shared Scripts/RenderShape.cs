@@ -12,7 +12,6 @@ public class RenderShape : MonoBehaviour
     public PolygonCollider2D triangleCollider;
     public float lineWidth;
     public Color lineColor;
-
     public int circleSteps;
     public float circleRadius;
     public float rectangleLengthX;

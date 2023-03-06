@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed = 5f;
     public float rotateSpeed;
 
+    public bool canMove = true;
+
 
 
 
@@ -25,7 +27,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Movement();
+        if (canMove)
+        {
+            Movement();
+        }
     }
 
     private void Movement()
