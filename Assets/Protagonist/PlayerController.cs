@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     private RenderShape bodyShape;
     private Rigidbody2D rb2D;
+    public GameObject standardProjectilePrefab;
     public float movementSpeed = 5f;
     public float rotateSpeed;
 
@@ -31,6 +32,8 @@ public class PlayerController : MonoBehaviour
         {
             Movement();
         }
+
+        Abilities();
     }
 
     private void Movement()
@@ -55,6 +58,37 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Abilities()
+    {
+        bool leftMouseClicked = Input.GetButtonDown("Fire1");
+        if (leftMouseClicked)
+        {
+            ShootFromPoints();
+        }
+
+        void ShootFromPoints()
+        {
+            LineRenderer lineRenderer = bodyShape.GetComponent<LineRenderer>();
+            int numberOfPoints = lineRenderer.positionCount;
+            for (int i = 0; i < numberOfPoints; i++)
+            {
+                InstantiateProjectile(lineRenderer.GetPosition(i));
+            }
+
+        }
+        void InstantiateProjectile(Vector3 position)
+        {
+            // Instantiate a StandardProjectile game object
+            GameObject projectile = Instantiate(standardProjectilePrefab, position, transform.rotation);
+
+            // Calculate the direction of the projectile based on the position of the triangle point
+            Vector3 direction = (position - transform.position).normalized;
+
+            // Get the projectile's movement script and set its movement direction
+            StandardProjectile projectileMovement = projectile.GetComponent<StandardProjectile>();
+            projectileMovement.SetMovementDirection(direction);
+        }
+    }
 
 
 }

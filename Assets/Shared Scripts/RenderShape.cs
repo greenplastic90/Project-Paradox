@@ -33,8 +33,6 @@ public class RenderShape : MonoBehaviour
     {
         lineRenderer.startWidth = lineWidth;
         lineRenderer.endWidth = lineWidth;
-        lineColor = new Color(255, 255, 255);
-        lineRenderer.material.color = lineColor;
         lineRenderer.loop = true;
     }
 
